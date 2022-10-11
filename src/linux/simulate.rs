@@ -92,12 +92,18 @@ unsafe fn send_native_char(chr: char, pressed: bool, display: *mut xlib::Display
 
     // char to keysym
     let ordinal: u32 = chr.into();
+    /*
     let mut keysym = if ordinal < 0x100 {
         ordinal
     } else {
         ordinal | 0x01000000
     } as u64;
-
+    */
+    let mut keysym = if ordinal < 0x100 {
+        ordinal
+    } else {
+        ordinal | 0x01000000
+    } as u32;
     // remap keycode to keysym
     x11::xlib::XChangeKeyboardMapping(display, keycode as _, 1, &mut keysym, 1);
 
